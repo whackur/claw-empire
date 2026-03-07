@@ -344,25 +344,25 @@ export default function ApiSettingsTab({ t, localeTag, apiState }: ApiSettingsTa
                           />
                           <div className="max-h-48 overflow-y-auto rounded border border-slate-700/30 bg-slate-900/40 p-2">
                             {filteredModels.map((model) => (
-                                <div
-                                  key={model}
-                              className="flex items-center justify-between text-[11px] font-mono text-slate-400 py-0.5 group/model hover:bg-slate-700/30 rounded px-1 -mx-1"
-                            >
-                              <span className="truncate">{model}</span>
-                              <button
-                                onClick={() => void handleApiModelAssign(provider.id, model)}
-                                className="text-[9px] px-1.5 py-0.5 bg-blue-600/60 hover:bg-blue-500 text-blue-200 rounded opacity-0 group-hover/model:opacity-100 transition-opacity whitespace-nowrap ml-2"
-                                title={t({
-                                  ko: "에이전트에 배정",
-                                  en: "Assign to agent",
-                                  ja: "エージェントに割り当て",
-                                  zh: "分配给代理",
-                                })}
+                              <div
+                                key={model}
+                                className="flex items-center justify-between text-[11px] font-mono text-slate-400 py-0.5 group/model hover:bg-slate-700/30 rounded px-1 -mx-1"
                               >
-                                {t({ ko: "배정", en: "Assign", ja: "割当", zh: "分配" })}
-                              </button>
-                            </div>
-                          ))}
+                                <span className="truncate">{model}</span>
+                                <button
+                                  onClick={() => void handleApiModelAssign(provider.id, model)}
+                                  className="text-[9px] px-1.5 py-0.5 bg-blue-600/60 hover:bg-blue-500 text-blue-200 rounded opacity-0 group-hover/model:opacity-100 transition-opacity whitespace-nowrap ml-2"
+                                  title={t({
+                                    ko: "에이전트에 배정",
+                                    en: "Assign to agent",
+                                    ja: "エージェントに割り当て",
+                                    zh: "分配给代理",
+                                  })}
+                                >
+                                  {t({ ko: "배정", en: "Assign", ja: "割当", zh: "分配" })}
+                                </button>
+                              </div>
+                            ))}
                             {filteredModels.length === 0 && (
                               <div className="text-[11px] text-slate-500 text-center py-2">
                                 {t({ ko: "검색 결과 없음", en: "No results", ja: "結果なし", zh: "无结果" })}

@@ -96,7 +96,10 @@ test.describe("CI docs and operational API coverage", () => {
     expect(docsHtml).toContain("/api/docs/swagger-bootstrap.js");
 
     const meetingPresenceRes = await request.get("/api/meeting-presence");
-    const meetingPresence = await expectOkJson<{ presence: unknown[] }>(meetingPresenceRes, "GET /api/meeting-presence");
+    const meetingPresence = await expectOkJson<{ presence: unknown[] }>(
+      meetingPresenceRes,
+      "GET /api/meeting-presence",
+    );
     expect(Array.isArray(meetingPresence.presence)).toBe(true);
 
     const activeAgentsRes = await request.get("/api/agents/active");
@@ -124,7 +127,10 @@ test.describe("CI docs and operational API coverage", () => {
     expect(providerPresets.presets).toHaveProperty("openai");
 
     const cliUsageRes = await request.get("/api/cli-usage");
-    const cliUsage = await expectOkJson<{ ok: boolean; usage: Record<string, unknown> }>(cliUsageRes, "GET /api/cli-usage");
+    const cliUsage = await expectOkJson<{ ok: boolean; usage: Record<string, unknown> }>(
+      cliUsageRes,
+      "GET /api/cli-usage",
+    );
     expect(cliUsage.ok).toBe(true);
     expect(typeof cliUsage.usage).toBe("object");
 
@@ -223,7 +229,10 @@ test.describe("CI docs and operational API coverage", () => {
     expect(bulkHide.affected).toBeGreaterThan(0);
 
     const taskDetailRes = await request.get(`/api/tasks/${taskId}`);
-    const taskDetail = await expectOkJson<{ task: { id: string; hidden: number } }>(taskDetailRes, "GET /api/tasks/:id");
+    const taskDetail = await expectOkJson<{ task: { id: string; hidden: number } }>(
+      taskDetailRes,
+      "GET /api/tasks/:id",
+    );
     expect(taskDetail.task.hidden).toBe(1);
 
     const diffRes = await request.get(`/api/tasks/${taskId}/diff`);
