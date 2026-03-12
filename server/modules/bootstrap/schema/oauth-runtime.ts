@@ -130,7 +130,7 @@ export function initializeOAuthRuntime(deps: OAuthRuntimeDeps): OAuthRuntimeHelp
         department_id TEXT REFERENCES departments(id),
         role TEXT NOT NULL CHECK(role IN ('team_leader','senior','junior','intern')),
         acts_as_planning_leader INTEGER NOT NULL DEFAULT 0 CHECK(acts_as_planning_leader IN (0,1)),
-        cli_provider TEXT CHECK(cli_provider IN ('claude','codex','gemini','opencode','copilot','antigravity','api')),
+        cli_provider TEXT CHECK(cli_provider IN ('claude','codex','gemini','opencode','kimi','copilot','antigravity','api')),
         oauth_account_id TEXT,
         api_provider_id TEXT,
         api_model TEXT,

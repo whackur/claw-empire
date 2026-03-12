@@ -8,7 +8,7 @@ type DbLike = {
   };
 };
 
-type InstallableProvider = "claude" | "codex" | "gemini" | "opencode" | "copilot" | "antigravity";
+type InstallableProvider = "claude" | "codex" | "gemini" | "opencode" | "kimi" | "copilot" | "antigravity";
 
 const REMOTION_SKILL_REPO = "remotion-dev/skills";
 const REMOTION_SKILL_ID = "remotion-best-practices";

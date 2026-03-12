@@ -1,6 +1,6 @@
 import type { DatabaseSync } from "node:sqlite";
 
-type PromptSkillProvider = "claude" | "codex" | "gemini" | "opencode" | "copilot" | "antigravity" | "api";
+type PromptSkillProvider = "claude" | "codex" | "gemini" | "opencode" | "kimi" | "copilot" | "antigravity" | "api";
 type PromptSkillRow = {
   repo: string;
   skill_id: string;
