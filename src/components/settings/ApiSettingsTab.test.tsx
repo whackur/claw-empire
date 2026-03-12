@@ -27,12 +27,12 @@ const OFFICIAL_PRESETS = {
     fallback_models: ["glm-5", "kimi-k2.5"],
   },
   "alibaba-coding-plan-openai": {
-    label: "Alibaba Coding Plan (OpenAI)",
-    description: "Alibaba Cloud Coding Plan direct API preset using the OpenAI-compatible protocol.",
+    label: "Bailian Coding Plan (OpenAI)",
+    description: "Alibaba Bailian Coding Plan direct API preset using the OpenAI-compatible protocol.",
     type: "openai" as const,
     base_url: "https://coding-intl.dashscope.aliyuncs.com/v1",
     docs_url: "https://www.alibabacloud.com/help/en/model-studio/other-tools-coding-plan",
-    api_key_hint: "Coding Plan keys for this preset must start with sk-sp-.",
+    api_key_hint: "Bailian Coding Plan keys for this preset must start with sk-sp-.",
     api_key_placeholder: "sk-sp-...",
     fallback_models: ["qwen3.5-plus", "glm-5"],
     required_api_key_prefix: "sk-sp-",
@@ -128,7 +128,7 @@ describe("ApiSettingsTab", () => {
         providers={[
           {
             id: "provider-1",
-            name: "Alibaba Coding Plan",
+            name: "Bailian Coding Plan",
             type: "openai",
             base_url: "https://coding-intl.dashscope.aliyuncs.com/v1",
             preset_key: "alibaba-coding-plan-openai",
@@ -143,7 +143,7 @@ describe("ApiSettingsTab", () => {
       />,
     );
 
-    expect(screen.getByText("Alibaba Coding Plan (OpenAI)")).toBeInTheDocument();
+    expect(screen.getByText("Bailian Coding Plan (OpenAI)")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Models \(2\)/ }));
     expect(screen.getByText("qwen3.5-plus")).toBeInTheDocument();
     expect(screen.getByText("glm-5")).toBeInTheDocument();

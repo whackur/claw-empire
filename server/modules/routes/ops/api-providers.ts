@@ -101,12 +101,12 @@ const OFFICIAL_API_PROVIDER_PRESETS = {
     fallback_models: ["minimax-m2.5"],
   },
   "alibaba-coding-plan-openai": {
-    label: "Alibaba Coding Plan (OpenAI)",
-    description: "Alibaba Cloud Coding Plan direct API preset using the OpenAI-compatible protocol.",
+    label: "Bailian Coding Plan (OpenAI)",
+    description: "Alibaba Bailian Coding Plan direct API preset using the OpenAI-compatible protocol.",
     type: "openai",
     base_url: "https://coding-intl.dashscope.aliyuncs.com/v1",
     docs_url: "https://www.alibabacloud.com/help/en/model-studio/other-tools-coding-plan",
-    api_key_hint: "Coding Plan keys for this preset must start with sk-sp-.",
+    api_key_hint: "Bailian Coding Plan keys for this preset must start with sk-sp-.",
     api_key_placeholder: "sk-sp-...",
     fallback_models: [
       "qwen3.5-plus",
@@ -121,12 +121,12 @@ const OFFICIAL_API_PROVIDER_PRESETS = {
     required_api_key_prefix: "sk-sp-",
   },
   "alibaba-coding-plan-anthropic": {
-    label: "Alibaba Coding Plan (Anthropic)",
-    description: "Alibaba Cloud Coding Plan direct API preset using the Anthropic-compatible protocol.",
+    label: "Bailian Coding Plan (Anthropic)",
+    description: "Alibaba Bailian Coding Plan direct API preset using the Anthropic-compatible protocol.",
     type: "anthropic",
     base_url: "https://coding-intl.dashscope.aliyuncs.com/apps/anthropic",
     docs_url: "https://www.alibabacloud.com/help/en/model-studio/other-tools-coding-plan",
-    api_key_hint: "Coding Plan keys for this preset must start with sk-sp-.",
+    api_key_hint: "Bailian Coding Plan keys for this preset must start with sk-sp-.",
     api_key_placeholder: "sk-sp-...",
     fallback_models: [
       "qwen3.5-plus",

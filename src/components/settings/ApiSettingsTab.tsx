@@ -108,10 +108,10 @@ export default function ApiSettingsTab({ t, localeTag, apiState }: ApiSettingsTa
               </label>
               <p className="mb-2 text-[11px] text-slate-500">
                 {t({
-                  ko: "OpenCode Go와 Alibaba Coding Plan용 공식 프리셋입니다.",
-                  en: "Official presets for OpenCode Go and Alibaba Coding Plan.",
-                  ja: "OpenCode Go と Alibaba Coding Plan 向けの公式プリセットです。",
-                  zh: "适用于 OpenCode Go 与 Alibaba Coding Plan 的官方预设。",
+                  ko: "OpenCode Go와 Bailian Coding Plan용 공식 프리셋입니다.",
+                  en: "Official presets for OpenCode Go and Bailian Coding Plan.",
+                  ja: "OpenCode Go と Bailian Coding Plan 向けの公式プリセットです。",
+                  zh: "适用于 OpenCode Go 与 Bailian Coding Plan 的官方预设。",
                 })}
               </p>
 

@@ -734,15 +734,15 @@ GitHub에 더 최신 릴리즈가 게시되면, Claw-Empire는 UI 상단에 pull
 
 - `OpenCode Go (OpenAI)` -> `https://opencode.ai/zen/go/v1`
 - `OpenCode Go (Anthropic)` -> `https://opencode.ai/zen/go/v1`
-- `Alibaba Coding Plan (OpenAI)` -> `https://coding-intl.dashscope.aliyuncs.com/v1`
-- `Alibaba Coding Plan (Anthropic)` -> `https://coding-intl.dashscope.aliyuncs.com/apps/anthropic`
+- `Bailian Coding Plan (OpenAI)` -> `https://coding-intl.dashscope.aliyuncs.com/v1`
+- `Bailian Coding Plan (Anthropic)` -> `https://coding-intl.dashscope.aliyuncs.com/apps/anthropic`
 
 메모:
 
-- Alibaba Coding Plan API 키는 반드시 `sk-sp-` 접두사로 시작해야 합니다.
+- Bailian Coding Plan API 키는 반드시 `sk-sp-` 접두사로 시작해야 합니다.
 - 이 프리셋들은 저장 즉시 fallback 모델 목록을 시드하므로, live `/models` 조회가 불완전하거나 실패해도 바로 에이전트에 배정할 수 있습니다.
 - direct API 프리셋은 `glm-5`, `kimi-k2.5`, `minimax-m2.5` 같은 실제 endpoint model id를 사용합니다. `opencode-go/<model-id>` 같은 OpenCode CLI 모델 ID를 쓰지 않습니다.
-- Alibaba Coding Plan 키는 인터랙티브 코딩 도구 흐름용으로 안내되는 키입니다. 다른 환경에 재사용하기 전에 공식 문서를 확인하세요.
+- Bailian Coding Plan 키는 인터랙티브 코딩 도구 흐름용으로 안내되는 키입니다. 다른 환경에 재사용하기 전에 공식 문서를 확인하세요.
 
 Claw-Empire는 아래 3가지 방식의 프로바이더를 지원합니다:
 

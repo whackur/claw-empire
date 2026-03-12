@@ -119,7 +119,7 @@ describe("api provider routes", () => {
     }
   });
 
-  it("rejects invalid Alibaba Coding Plan API keys on update", async () => {
+  it("rejects invalid Bailian Coding Plan API keys on update", async () => {
     const { app, db } = await createHarness();
 
     try {
@@ -189,7 +189,7 @@ describe("api provider routes", () => {
 
     try {
       const createResponse = await request(app).post("/api/api-providers").send({
-        name: "Alibaba Coding Plan",
+        name: "Bailian Coding Plan",
         type: "openai",
         base_url: "https://ignored.example",
         preset_key: "alibaba-coding-plan-openai",
