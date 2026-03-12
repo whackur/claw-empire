@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2.0.0-blue" alt="Releases" />
+  <img src="https://img.shields.io/badge/version-2.0.3-blue" alt="Releases" />
   <a href="https://github.com/GreenSheep01201/claw-empire/actions/workflows/ci.yml"><img src="https://github.com/GreenSheep01201/claw-empire/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js 22+" />
   <img src="https://img.shields.io/badge/license-Apache%202.0-orange" alt="License" />
@@ -21,7 +21,7 @@
 <p align="center">
   <a href="#quick-start">Quick Start</a> &middot;
   <a href="#ai-installation-guide">AI Install Guide</a> &middot;
-  <a href="docs/releases/v2.0.0.md">Release Notes</a> &middot;
+  <a href="docs/releases/v2.0.3.md">Release Notes</a> &middot;
   <a href="#openclaw-integration">OpenClaw</a> &middot;
   <a href="#direct-messenger-without-openclaw">Direct Messenger</a> &middot;
   <a href="#dollar-command-logic">$ Command</a> &middot;
@@ -29,6 +29,7 @@
   <a href="#screenshots">Screenshots</a> &middot;
   <a href="#tech-stack">Tech Stack</a> &middot;
   <a href="#cli-provider-setup">Providers</a> &middot;
+  <a href="#docker-deployment-quick-start">Docker Deploy</a> &middot;
   <a href="#security">Security</a>
 </p>
 
@@ -68,26 +69,18 @@ Claw-Empire transforms your AI coding assistants — connected via **CLI**, **OA
 
 ---
 
-## Latest Release (v2.0.0)
+## Latest Release (v2.0.3)
 
-- **Workflow Pack platform rollout** - Added pack-aware orchestration with built-in keys (`development`, `report`, `web_research_report`, `novel`, `video_preprod`, `roleplay`) and API surface for runtime pack metadata.
-- **Office Pack operations integrated** - Moved pack selector into the top header and enabled isolated per-pack office profiles (agents/departments/themes) for non-development packs.
-- **Pack-specific staff/department seeding** - Added multilingual pack presets with role-aligned names and office themes, plus synchronization utilities for pack profile updates.
-- **Messenger multi-token isolation** - Route resolution now disambiguates same-channel/same-target sessions by token hint (`channel#tokenKey`), preventing cross-bot reply leakage.
-- **Telegram receiver multi-token hardening** - Added per-token route polling/offset persistence so multiple Telegram bot tokens can safely receive and relay in parallel.
-- **In-messenger `/new` session reset** - Added localized reset ACK flow to clear direct-chat session bindings and start fresh conversation context.
-- **Decision notice readability v2** - Improved planning summary compactness, option preview formatting, and recommendation line clarity for mobile messenger readability.
-- **Regression coverage expansion** - Added targeted tests for token-aware routing, Telegram receiver behavior, office pack normalization/sync, and related routing paths.
-- **Video pre-production render flow hardening** - Stabilized `video_preprod` final-render orchestration (`VIDEO_FINAL_RENDER`) with seed-time creation, deferred delegation, stale-state reconciliation, and duplicate-trigger prevention.
-- **Office pack first-load hydration and persistence** - Added first-entry seed bootstrap per pack, then switched hydrated packs to DB-backed persistence to keep user customizations (including provider edits) stable.
-- **Report output policy upgrade (HTML + PPTX)** - Report office output policy now targets both HTML and PPTX; `python-pptx` fallback is restricted to PPT Team unavailable/hard-fail cases.
-- **Core runtime fix bundle on existing flows** - Hardened branch-collision worktree recovery, preserved Claude `--no-tools` argv semantics, and stabilized YOLO/WebSocket retry behavior.
+- **Final branch verification is now visible before merge** - the Diff Modal now shows a verification verdict, compare ref, commit count, changed files, and uncommitted-file state from `GET /api/tasks/:id/verify-commit`.
+- **Completion reports retain merge-time verification evidence** - successful manual merge flow writes `Final branch verification: ...` logs, and the report popup surfaces them in the planning summary view.
+- **Report avatars stay on sprite faces even when the active roster changes** - report rows and popups now reconstruct a fallback agent from report payload data instead of degrading to emoji when the current `agents` list no longer contains the assignee.
+- **Selected salvage from PR #54 was added without importing its risky task-model changes** - this release includes the worktree verification API/UI, `scripts/cleanup-staff.mjs`, and optional `deploy/` self-host reference templates only.
 
-- Full notes: [`docs/releases/v2.0.0.md`](docs/releases/v2.0.0.md)
+- Full notes: [`docs/releases/v2.0.3.md`](docs/releases/v2.0.3.md)
 - API docs: [`docs/api.md`](docs/api.md), [`docs/openapi.json`](docs/openapi.json)
 - Security policy: [`SECURITY.md`](SECURITY.md)
 
-## Office Pack Profiles (v2.0.0)
+## Office Pack Profiles (v2.0.1)
 
 Each office pack applies a different collaboration topology, naming seed, and workflow bias.
 
@@ -375,6 +368,59 @@ Notes:
 ---
 
 ## Quick Start
+
+## Docker Deployment (Quick Start)
+
+This repo now ships production-oriented Docker defaults:
+
+- Runs as **non-root** user (`app`, uid/gid `10001`)
+- Includes required CLI/runtime tools (`git`, `bash`, `openssh-client`)
+- Uses `docker-compose.yml` + `Dockerfile`
+- Persists runtime data in `./data` (already gitignored)
+
+### 1) Prepare environment files
+
+```bash
+cp .env.example .env.docker
+```
+
+Create `.env.docker.private` for sensitive runtime secrets (keep this file local only):
+
+```bash
+cat > .env.docker.private <<'EOF'
+# Claude Code via compatible endpoint
+ANTHROPIC_BASE_URL=https://api.minimaxi.com/anthropic
+ANTHROPIC_API_KEY=YOUR_ANTHROPIC_API_KEY
+EOF
+chmod 600 .env.docker.private
+```
+
+> `.env.docker*` is ignored by git (`.env.*`), so tokens are not committed by default.
+
+### 2) Start
+
+```bash
+docker compose up -d --build
+```
+
+### 3) Verify
+
+```bash
+docker ps --filter name=claw-empire
+docker logs -f claw-empire
+```
+
+Open: `http://127.0.0.1:8790`
+
+### Optional: publish image to GHCR
+
+```bash
+# requires token with package write scope
+echo "<GITHUB_TOKEN_WITH_PACKAGES_WRITE>" | docker login ghcr.io -u <github-user> --password-stdin
+docker tag claw-empire-claw-empire:latest ghcr.io/<github-user>/claw-empire:latest
+docker push ghcr.io/<github-user>/claw-empire:latest
+```
+
 
 ### Prerequisites
 

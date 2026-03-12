@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2.0.0-blue" alt="Releases" />
+  <img src="https://img.shields.io/badge/version-2.0.3-blue" alt="Releases" />
   <a href="https://github.com/GreenSheep01201/claw-empire/actions/workflows/ci.yml"><img src="https://github.com/GreenSheep01201/claw-empire/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI" /></a>
   <img src="https://img.shields.io/badge/node-%3E%3D22-brightgreen" alt="Node.js 22+" />
   <img src="https://img.shields.io/badge/license-Apache%202.0-orange" alt="License" />
@@ -21,7 +21,7 @@
 <p align="center">
   <a href="#빠른-시작">빠른 시작</a> &middot;
   <a href="#ai-installation-guide">AI 설치 가이드</a> &middot;
-  <a href="docs/releases/v2.0.0.md">릴리즈 노트</a> &middot;
+  <a href="docs/releases/v2.0.3.md">릴리즈 노트</a> &middot;
   <a href="#openclaw-integration">OpenClaw 연동</a> &middot;
   <a href="#direct-messenger-without-openclaw">직접 메신저</a> &middot;
   <a href="#dollar-command-logic">$ 명령 로직</a> &middot;
@@ -29,6 +29,7 @@
   <a href="#스크린샷">스크린샷</a> &middot;
   <a href="#기술-스택">기술 스택</a> &middot;
   <a href="#cli-프로바이더-설정">프로바이더</a> &middot;
+  <a href="#docker-배포-빠른-시작">Docker 배포</a> &middot;
   <a href="#보안">보안</a>
 </p>
 
@@ -68,26 +69,18 @@ Claw-Empire는 **CLI**, **OAuth**, **직접 API 키** 방식으로 연결된 AI 
 
 ---
 
-## 최신 릴리즈 (v2.0.0)
+## 최신 릴리즈 (v2.0.3)
 
-- **워크플로우 팩 플랫폼 롤아웃** - `development`, `report`, `web_research_report`, `novel`, `video_preprod`, `roleplay` 팩 기반 오케스트레이션과 런타임 메타데이터 API를 추가했습니다.
-- **오피스 팩 운영 연동 강화** - 오피스 팩 선택기를 상단 헤더로 이동하고, 개발 팩 외에는 팩별 독립 프로필(직원/부서/테마)로 분리 운영하도록 개선했습니다.
-- **팩별 직원/부서 시드 고도화** - 다국어 이름/역할 기반 시드 프리셋과 팩 프로필 동기화 유틸리티를 추가해 실제 운영 데이터 반영을 안정화했습니다.
-- **메신저 멀티 토큰 라우팅 격리** - `channel#tokenKey` 기반 힌트 라우팅으로 같은 채널/타깃 ID라도 토큰이 다르면 정확한 세션으로 회신하도록 고정했습니다.
-- **텔레그램 수신기 멀티 토큰 안정화** - 토큰별 폴링 라우트 및 오프셋을 분리 저장해 여러 봇 토큰을 병렬로 안전하게 운용할 수 있습니다.
-- **메신저 `/new` 세션 초기화** - `/new` 명령으로 직접채팅 세션 바인딩을 초기화하고, 다국어 ACK와 함께 새 대화를 시작합니다.
-- **의사결정 메시지 가독성 v2** - 기획팀장 요약, 선택지 미리보기, 추천 선택지 표기를 더 짧고 명확하게 정리했습니다.
-- **회귀 테스트 확장** - 토큰 인지 라우팅, 텔레그램 수신, 오피스 팩 정규화/동기화 등 핵심 경로 테스트를 보강했습니다.
-- **영상 프리프로덕션 렌더 플로우 안정화** - `video_preprod`의 `VIDEO_FINAL_RENDER` 흐름을 계획 단계 시드 생성, 지연 위임, stale 상태 복구, 중복 트리거 방지까지 포함해 보강했습니다.
-- **오피스팩 첫 로드 hydrate 및 영속화** - 팩별 최초 진입 시 시드 부트스트랩을 수행하고, 이후 hydrated 팩은 DB 기반으로 고정해 사용자 커스텀(프로바이더 변경 포함)을 안정적으로 유지합니다.
-- **보고서 출력 정책 고도화(HTML + PPTX)** - 보고서 오피스 출력 정책을 HTML+PPTX 동시 산출로 정리했고, `python-pptx`는 PPT Team 불가/하드 실패 시에만 fallback으로 제한했습니다.
-- **기존 런타임 안정화 Fix 묶음** - worktree 브랜치 충돌 복구, Claude `--no-tools` 인자 보존, YOLO/WebSocket 재시도 안정화를 반영했습니다.
+- **머지 전에 최종 브랜치 검증 결과를 바로 확인할 수 있습니다** - Diff Modal이 `GET /api/tasks/:id/verify-commit` 결과를 표시해 verdict, 비교 기준 ref, 커밋 수, 변경 파일, 미커밋 파일 상태를 함께 보여줍니다.
+- **작업 완료 보고서에 머지 시점 검증 근거가 남습니다** - 수동 머지 성공 시 `Final branch verification: ...` 로그가 기록되고, 보고서 팝업의 기획 요약 영역에서 그대로 확인할 수 있습니다.
+- **활성 에이전트 목록이 바뀌어도 보고서 얼굴은 sprite로 유지됩니다** - 현재 `agents` 배열에 담당자가 없어도 보고서 payload의 agent 정보로 fallback agent를 복원해 이모지로 내려가지 않습니다.
+- **PR #54에서는 안전한 범위만 선별 반영했습니다** - worktree verification API/UI, `scripts/cleanup-staff.mjs`, 선택적인 `deploy/` self-host 템플릿만 포함했고, task model 변경이나 admin/local-server 확장은 넣지 않았습니다.
 
-- 상세 문서: [`docs/releases/v2.0.0.md`](docs/releases/v2.0.0.md)
+- 상세 문서: [`docs/releases/v2.0.3.md`](docs/releases/v2.0.3.md)
 - API 문서: [`docs/api.md`](docs/api.md), [`docs/openapi.json`](docs/openapi.json)
 - 보안 정책: [`SECURITY.md`](SECURITY.md)
 
-## 오피스팩 프로필 (v2.0.0)
+## 오피스팩 프로필 (v2.0.1)
 
 오피스팩마다 협업 구조, 이름 시드, 워크플로우 성향이 다르게 적용됩니다.
 
@@ -375,6 +368,59 @@ OpenClaw 없이도 Claw-Empire만으로 메신저 채널을 직접 운영할 수
 ---
 
 ## 빠른 시작
+
+## Docker 배포 (빠른 시작)
+
+이 저장소는 운영 지향 Docker 기본 구성을 포함합니다.
+
+- 기본 실행 사용자는 **non-root** (`app`, uid/gid `10001`)
+- 필수 도구(`git`, `bash`, `openssh-client`) 포함
+- 표준 파일명 `docker-compose.yml` + `Dockerfile` 사용
+- 런타임 데이터는 `./data`에 영속화 (gitignore 적용)
+
+### 1) 환경 파일 준비
+
+```bash
+cp .env.example .env.docker
+```
+
+민감 정보는 `.env.docker.private`에 저장하세요 (로컬 전용):
+
+```bash
+cat > .env.docker.private <<'EOF'
+# Claude Code 호환 엔드포인트
+ANTHROPIC_BASE_URL=https://api.minimaxi.com/anthropic
+ANTHROPIC_API_KEY=YOUR_ANTHROPIC_API_KEY
+EOF
+chmod 600 .env.docker.private
+```
+
+> `.env.docker*`는 `.env.*` 규칙으로 git에 커밋되지 않습니다.
+
+### 2) 시작
+
+```bash
+docker compose up -d --build
+```
+
+### 3) 확인
+
+```bash
+docker ps --filter name=claw-empire
+docker logs -f claw-empire
+```
+
+접속: `http://127.0.0.1:8790`
+
+### 선택: GHCR로 이미지 푸시
+
+```bash
+# packages write 권한이 있는 GitHub Token 필요
+echo "<GITHUB_TOKEN_WITH_PACKAGES_WRITE>" | docker login ghcr.io -u <github-user> --password-stdin
+docker tag claw-empire-claw-empire:latest ghcr.io/<github-user>/claw-empire:latest
+docker push ghcr.io/<github-user>/claw-empire:latest
+```
+
 
 ### 사전 요구사항
 

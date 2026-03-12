@@ -4,6 +4,7 @@ dist/
 
 # Runtime artifacts
 logs/
+data/
 custom-skills/
 /tasks/
 *.log
@@ -43,6 +44,7 @@ docs/.pdca-*
 .vscode/
 .idea/
 CLAUDE.md
+tasks.md
 *.swp
 *.swo
 *~

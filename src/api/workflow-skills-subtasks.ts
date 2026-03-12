@@ -12,6 +12,31 @@ export interface TaskDiffResult {
   error?: string;
 }
 
+export type VerifyCommitVerdict =
+  | "no_worktree"
+  | "no_commit"
+  | "dirty_without_commit"
+  | "commit_but_no_code"
+  | "ok"
+  | "error";
+
+export interface TaskVerifyCommitResult {
+  ok: boolean;
+  hasWorktree?: boolean;
+  worktreePath?: string;
+  branchName?: string;
+  compareRef?: string | null;
+  hasCommit?: boolean;
+  commitCount?: number;
+  commits?: string[];
+  files?: string[];
+  uncommittedFiles?: string[];
+  hasUncommittedChanges?: boolean;
+  hasRealCode?: boolean;
+  verdict?: VerifyCommitVerdict;
+  error?: string;
+}
+
 export interface MergeResult {
   ok: boolean;
   message: string;
@@ -27,6 +52,10 @@ export interface WorktreeEntry {
 
 export async function getTaskDiff(id: string): Promise<TaskDiffResult> {
   return request<TaskDiffResult>(`/api/tasks/${id}/diff`);
+}
+
+export async function getTaskVerifyCommit(id: string): Promise<TaskVerifyCommitResult> {
+  return request<TaskVerifyCommitResult>(`/api/tasks/${id}/verify-commit`);
 }
 
 export async function mergeTask(id: string): Promise<MergeResult> {
@@ -302,6 +331,26 @@ export type TelegramReceiverStatus = {
   lastError: string | null;
 };
 
+export type DiscordReceiverStatus = {
+  running: boolean;
+  configured: boolean;
+  enabled: boolean;
+  routeCount: number;
+  nextCursorCount: number;
+  lastPollAt: number | null;
+  lastForwardAt: number | null;
+  lastMessageId: string | null;
+  lastError: string | null;
+};
+
+export type DiscordDiscoverableChannel = {
+  id: string;
+  name: string;
+  guildId: string;
+  guildName: string;
+  type: number;
+};
+
 export async function getMessengerRuntimeSessions(): Promise<MessengerRuntimeSession[]> {
   const data = await request<{ sessions?: MessengerRuntimeSession[] }>("/api/messenger/sessions");
   return data.sessions ?? [];
@@ -323,6 +372,34 @@ export async function getTelegramReceiverStatus(): Promise<TelegramReceiverStatu
       lastError: "status_unavailable",
     }
   );
+}
+
+export async function getDiscordReceiverStatus(): Promise<DiscordReceiverStatus> {
+  const data = await request<{ status?: DiscordReceiverStatus }>("/api/messenger/receiver/discord");
+  return (
+    data.status ?? {
+      running: false,
+      configured: false,
+      enabled: false,
+      routeCount: 0,
+      nextCursorCount: 0,
+      lastPollAt: null,
+      lastForwardAt: null,
+      lastMessageId: null,
+      lastError: "status_unavailable",
+    }
+  );
+}
+
+export async function listDiscordChannelsByToken(token: string): Promise<DiscordDiscoverableChannel[]> {
+  const normalizedToken = token.trim();
+  if (!normalizedToken) {
+    return [];
+  }
+  const data = await post<{ channels?: DiscordDiscoverableChannel[] }>("/api/messenger/discord/channels", {
+    token: normalizedToken,
+  });
+  return data.channels ?? [];
 }
 
 export async function sendMessengerRuntimeMessage(input: {
